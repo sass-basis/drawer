@@ -1,14 +1,16 @@
 'use strict';
 
 export default class BasisDrawer {
-	constructor(params) {
+	constructor(container, params) {
+		if (!container) {
+			container = '._c-drawer';
+		}
 		this.params = Object.assign({
-			'container': '._c-drawer',
-			'drawer'   : '._c-drawer__body',
-			'btn'      : '._c-drawer__btn'
+			'drawer': '._c-drawer__body',
+			'btn'   : '._c-drawer__btn'
 		}, params);
 
-		this.container = document.querySelectorAll(this.params.container);
+		this.container = document.querySelectorAll(container);
 		this.setListener();
 	}
 
