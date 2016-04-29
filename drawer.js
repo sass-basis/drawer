@@ -36,6 +36,19 @@ export default class BasisDrawer {
 			container.addEventListener('resize', (event) => {
 				this.close(drawer);
 			}, false);
+
+			const has_submenus = drawer.querySelectorAll('[aria-expanded]');
+			for (let i = 0; i < has_submenus.length; i ++) {
+				const element = has_submenus[i].children;
+				for (let j = 0; j < element.length; j ++) {
+					if (element[j].tagName.toUpperCase() == 'A') {
+						element[j].addEventListener('click', (event) => {
+							this.toggle(has_submenus[i]);
+							event.stopPropagation();
+						}, false);
+					}
+				}
+			}
 		}
 	}
 
@@ -45,6 +58,10 @@ export default class BasisDrawer {
 			this.open(drawer);
 		} else {
 			this.close(drawer);
+			const has_submenus = drawer.querySelectorAll('[aria-expanded]');
+			for (let i = 0; i < has_submenus.length; i ++) {
+				this.close(has_submenus[i]);
+			}
 		}
 	}
 
