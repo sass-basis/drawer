@@ -8,9 +8,9 @@ This is a css module for sass-basis.
 ## Get Started
 1. `$ npm install sass-basis`
 1. `$ npm install sass-basis-drawer`
-1. Import `node_modules/sass-basis-layout/src/scss/basis.scss`
-1. Import `node_modules/sass-basis-layout/src/scss/object/component/_drawer.scss`
-1. Import `snode_modules/sass-basis-layout/rc/js/drawer.js`
+1. Import `node_modules/sass-basis-drawer/src/scss/basis.scss`
+1. Import `node_modules/sass-basis-drawer/src/scss/object/component/_drawer.scss`
+1. Import `snode_modules/sass-basis-drawer/src/js/drawer.js`
 
 ## Browser support
 Modern Browser and IE10+
