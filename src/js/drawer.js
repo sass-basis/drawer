@@ -28,6 +28,7 @@ export default class BasisDrawer {
 
 			container.addEventListener('click', (event) => {
 				this.close(drawer);
+				btn.classList.remove('is-close');
 			}, false);
 
 			drawer.addEventListener('click', (event) => {
@@ -35,7 +36,7 @@ export default class BasisDrawer {
 			}, false);
 
 			btn.addEventListener('click', (event) => {
-				this.toggle(drawer);
+				this.toggleDrawer(drawer);
 				event.stopPropagation();
 			}, false);
 
@@ -49,7 +50,7 @@ export default class BasisDrawer {
 				for (let j = 0; j < element.length; j ++) {
 					if (element[j].tagName.toUpperCase() == 'A') {
 						element[j].addEventListener('click', (event) => {
-							this.toggle(has_submenus[i]);
+							this.toggleSubmenus(has_submenus[i]);
 							event.stopPropagation();
 						}, false);
 					}
@@ -58,16 +59,31 @@ export default class BasisDrawer {
 		}
 	}
 
-	toggle(drawer) {
+	toggleDrawer(drawer) {
 		event.preventDefault();
-		const btn = container.querySelector(this.params.btn);
-		if (drawer.getAttribute('aria-expanded') === 'false') {
-			this.open(drawer);
-			btn.classList.add('is-close');
+		for (let i = 0; i < this.container.length; i ++) {
+			const btn = this.container[i].querySelector(this.params.btn);
+			if (drawer.getAttribute('aria-expanded') === 'false') {
+				this.open(drawer);
+				btn.classList.add('is-close');
+			} else {
+				this.close(drawer);
+				btn.classList.remove('is-close');
+				const has_submenus = drawer.querySelectorAll('[aria-expanded]');
+				for (let i = 0; i < has_submenus.length; i ++) {
+					this.close(has_submenus[i]);
+				}
+			}
+		}
+	}
+
+	toggleSubmenus(submenus) {
+		event.preventDefault();
+		if (submenus.getAttribute('aria-expanded') === 'false') {
+			this.open(submenus);
 		} else {
-			this.close(drawer);
-			btn.classList.remove('is-close');
-			const has_submenus = drawer.querySelectorAll('[aria-expanded]');
+			this.close(submenus);
+			const has_submenus = submenus.querySelectorAll('[aria-expanded]');
 			for (let i = 0; i < has_submenus.length; i ++) {
 				this.close(has_submenus[i]);
 			}
