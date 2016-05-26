@@ -70,4 +70,8 @@ $bs-c-drawer-z-index: 10;
 	}
 
 	&__submenu {}
+
+	&__toggle {
+		cursor: pointer;
+	}
 }

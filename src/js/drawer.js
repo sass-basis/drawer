@@ -15,6 +15,9 @@ export default class BasisDrawer {
 		if (!this.params.btn) {
 			this.params.btn = '._c-drawer__btn';
 		}
+		if (!this.params.toggleSubmenus) {
+			this.params.toggleSubmenus = '._c-drawer__toggle';
+		}
 
 		this.container = document.querySelectorAll(container);
 		this.setListener();
@@ -46,15 +49,11 @@ export default class BasisDrawer {
 
 			const has_submenus = drawer.querySelectorAll('[aria-expanded]');
 			for (let i = 0; i < has_submenus.length; i ++) {
-				const element = has_submenus[i].children;
-				for (let j = 0; j < element.length; j ++) {
-					if (element[j].tagName.toUpperCase() == 'A') {
-						element[j].addEventListener('click', (event) => {
-							this.toggleSubmenus(has_submenus[i]);
-							event.stopPropagation();
-						}, false);
-					}
-				}
+				const toggleSubmenus = has_submenus[i].querySelector(this.params.toggleSubmenus);
+				toggleSubmenus.addEventListener('click', (event) => {
+					this.toggleSubmenus(has_submenus[i]);
+					event.stopPropagation();
+				}, false);
 			}
 		}
 	}
