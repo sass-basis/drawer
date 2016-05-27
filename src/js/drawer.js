@@ -43,17 +43,20 @@ export default class BasisDrawer {
 				event.stopPropagation();
 			}, false);
 
-			container.addEventListener('resize', (event) => {
+			window.addEventListener('resize', (event) => {
 				this.close(drawer);
+				btn.classList.remove('is-close');
 			}, false);
 
 			const has_submenus = drawer.querySelectorAll('[aria-expanded]');
 			for (let i = 0; i < has_submenus.length; i ++) {
 				const toggleSubmenus = has_submenus[i].querySelector(this.params.toggleSubmenus);
-				toggleSubmenus.addEventListener('click', (event) => {
-					this.toggleSubmenus(has_submenus[i]);
-					event.stopPropagation();
-				}, false);
+				if (toggleSubmenus) {
+					toggleSubmenus.addEventListener('click', (event) => {
+						this.toggleSubmenus(has_submenus[i]);
+						event.stopPropagation();
+					}, false);
+				}
 			}
 		}
 	}
