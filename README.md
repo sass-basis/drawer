@@ -3,7 +3,7 @@ This is a css module for sass-basis.
 
 ## Basis
 * Repository: https://github.com/sass-basis/basis/
-* Documents : http://sass-basis.github.io/basis/
+* Documents : http://sass-basis.github.io/
 
 ## Get Started
 1. `$ npm install sass-basis`
