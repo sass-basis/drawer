@@ -5,22 +5,26 @@ export default class BasisDrawer {
     if (!container) {
       container = '._c-drawer';
     }
+
+    this.params    = this.setParams(params);
+    this.container = document.querySelectorAll(container);
+    this.setListener();
+  }
+
+  setParams(params) {
     if (!params) {
       params = {};
     }
-    this.params = params;
-    if (!this.params.drawer) {
-      this.params.drawer = '._c-drawer__body';
+    if (!params.drawer) {
+      params.drawer = '._c-drawer__body';
     }
-    if (!this.params.btn) {
-      this.params.btn = '._c-drawer__btn';
+    if (!params.btn) {
+      params.btn = '._c-drawer__btn';
     }
-    if (!this.params.toggleSubmenus) {
-      this.params.toggleSubmenus = '._c-drawer__toggle';
+    if (!params.toggleSubmenus) {
+      params.toggleSubmenus = '._c-drawer__toggle';
     }
-
-    this.container = document.querySelectorAll(container);
-    this.setListener();
+    return params;
   }
 
   setListener() {
@@ -39,7 +43,8 @@ export default class BasisDrawer {
       }, false);
 
       btn.addEventListener('click', (event) => {
-        this.toggleDrawer(drawer);
+        this.toggle(drawer);
+        btn.classList.toggle('is-close');
         event.stopPropagation();
       }, false);
 
@@ -53,7 +58,7 @@ export default class BasisDrawer {
         const toggleSubmenus = has_submenus[i].querySelector(this.params.toggleSubmenus);
         if (toggleSubmenus) {
           toggleSubmenus.addEventListener('click', (event) => {
-            this.toggleSubmenus(has_submenus[i]);
+            this.toggle(has_submenus[i]);
             event.stopPropagation();
           }, false);
         }
@@ -61,34 +66,12 @@ export default class BasisDrawer {
     }
   }
 
-  toggleDrawer(drawer) {
+  toggle(drawer) {
     event.preventDefault();
-    for (let i = 0; i < this.container.length; i ++) {
-      const btn = this.container[i].querySelector(this.params.btn);
-      if (drawer.getAttribute('aria-expanded') === 'false') {
-        this.open(drawer);
-        btn.classList.add('is-close');
-      } else {
-        this.close(drawer);
-        btn.classList.remove('is-close');
-        const has_submenus = drawer.querySelectorAll('[aria-expanded]');
-        for (let i = 0; i < has_submenus.length; i ++) {
-          this.close(has_submenus[i]);
-        }
-      }
-    }
-  }
-
-  toggleSubmenus(submenus) {
-    event.preventDefault();
-    if (submenus.getAttribute('aria-expanded') === 'false') {
-      this.open(submenus);
+    if (drawer.getAttribute('aria-expanded') === 'false') {
+      this.open(drawer);
     } else {
-      this.close(submenus);
-      const has_submenus = submenus.querySelectorAll('[aria-expanded]');
-      for (let i = 0; i < has_submenus.length; i ++) {
-        this.close(has_submenus[i]);
-      }
+      this.close(drawer);
     }
   }
 
@@ -98,5 +81,9 @@ export default class BasisDrawer {
 
   close(drawer) {
     drawer.setAttribute('aria-expanded', 'false');
+    const has_submenus = drawer.querySelectorAll('[aria-expanded]');
+    for (let i = 0; i < has_submenus.length; i ++) {
+      this.close(has_submenus[i]);
+    }
   }
 }
